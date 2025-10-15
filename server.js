@@ -3,35 +3,36 @@
 
 // --- 1. Import các thư viện cần thiết ---
 import express from 'express';
-import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
+import { GoogleGenerativeAI} from '@google/generative-ai';
 import dotenv from 'dotenv';
 
 // --- 2. Cấu hình môi trường ---
 dotenv.config();
 
 // --- 3. Định nghĩa "Hợp đồng JSON" (Schema) ---
+// Thay thế toàn bộ khối puzzleSchema cũ bằng khối này
 const puzzleSchema = {
-  type: SchemaType.OBJECT,
+  type: "OBJECT",
   properties: {
-    theme: { type: SchemaType.STRING, description: "Chủ đề tổng thể của trò chơi ô chữ." },
+    theme: { type: "STRING", description: "Chủ đề tổng thể của trò chơi ô chữ." },
     vertical_keyword: {
-      type: SchemaType.OBJECT,
+      type: "OBJECT",
       properties: {
-        word: { type: SchemaType.STRING },
-        clue: { type: SchemaType.STRING },
+        word: { type: "STRING" },
+        clue: { type: "STRING" },
       },
       required: ['word', 'clue'],
     },
     horizontal_clues: {
-      type: SchemaType.ARRAY,
+      type: "ARRAY",
       items: {
-        type: SchemaType.OBJECT,
+        type: "OBJECT",
         properties: {
-          clue_number: { type: SchemaType.INTEGER },
-          word: { type: SchemaType.STRING },
-          clue: { type: SchemaType.STRING },
+          clue_number: { type: "INTEGER" },
+          word: { type: "STRING" },
+          clue: { type: "STRING" },
           intersection_index_vertical: {
-            type: SchemaType.INTEGER,
+            type: "INTEGER",
             description: "Chỉ số (bắt đầu từ 0) của chữ cái trong từ khóa hàng dọc nơi từ này giao nhau.",
           },
         },
