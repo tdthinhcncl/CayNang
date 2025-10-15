@@ -51,7 +51,7 @@ const port = process.env.PORT || 3000;
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
 const model = genAI.getGenerativeModel({
-  model: "gemini-pro", // Sử dụng model ổn định
+  model: "gemini-2.5-pro", // Sử dụng model ổn định
   generationConfig: {
     responseMimeType: "application/json",
   },
