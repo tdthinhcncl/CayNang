@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ô Chữ Olympia AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Ô Chữ Trí Tuệ - Tạo bởi AI</h1>
+	<div class="theme-selector">
+    	    <input type="text" id="theme-input" placeholder="Nhập chủ đề bạn muốn chơi (ví dụ: Lịch sử Việt Nam)">
+    	    <button id="generate-button">Tạo Ô Chữ Mới</button>
+	</div>
+        <h2 id="theme">Chủ đề: Đang tải...</h2>
+        
+        <div class="puzzle-container">
+            <div id="crossword-grid" class="crossword-grid">
+                </div>
+            
+            <div class="clues">
+                <div id="horizontal-clues">
+                    <h3>Hàng Ngang</h3>
+                    <ul>
+                        </ul>
+                </div>
+                <div id="vertical-clue">
+                    <h3>Hàng Dọc (Từ khóa)</h3>
+                    <p></p>
+                </div>
+            </div>
+        </div>
+
+	<div class="button-container">
+    	    <button id="check-button">Kiểm Tra Đáp Án</button>
+    	    <button id="hint-button">💡 Gợi Ý</button>
+	</div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

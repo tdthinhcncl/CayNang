@@ -1,0 +1,158 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f8ff;
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Thay đổi: Dàn các mục từ trên xuống */
+    padding: 20px;
+    min-height: 100vh; /* Đảm bảo container chiếm toàn bộ chiều cao */
+}
+
+.container {
+    background-color: white;
+    padding: 20px 40px; /* Tăng padding ngang */
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    width: auto; /* Để container tự co giãn theo nội dung */
+    max-width: 95%;
+}
+
+h1, h2, h3 {
+    text-align: center;
+    color: #0056b3;
+}
+
+.puzzle-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px; /* Tăng khoảng cách */
+    margin-top: 20px;
+    align-items: flex-start;
+}
+
+.crossword-grid {
+    display: grid;
+    border: 2px solid #333;
+    gap: 1px;
+    background-color: #333;
+    width: fit-content; /* Giữ nguyên: Rất quan trọng */
+}
+
+/* Đảm bảo kích thước ô được áp dụng chặt chẽ */
+.grid-cell, .vertical-cell {
+    width: 35px !important; 
+    height: 35px !important;
+    background-color: white;
+    text-align: center;
+    font-size: 1.2em;
+    text-transform: uppercase;
+    border: none;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+}
+
+.empty-cell {
+    width: 35px;
+    height: 35px;
+    background-color: #333;
+    border: none;
+}
+
+/* Quy tắc mới: Đảm bảo highlight được ưu tiên */
+.grid-cell.vertical-cell {
+    background-color: #e0f7fa; /* Màu xanh lơ nhạt */
+}
+
+.clues {
+    flex-basis: 400px; /* Đặt chiều rộng cơ sở cho khu vực gợi ý */
+    flex-shrink: 0; /* Ngăn không cho co lại */
+}
+
+.clues ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.clues li {
+    margin-bottom: 10px;
+}
+
+#check-button {
+    display: block;
+    margin: 30px auto 0; /* Tăng khoảng cách trên */
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#check-button:hover {
+    background-color: #218838;
+}
+
+/* Thêm vào cuối file style.css */
+.correct {
+    background-color: #d4edda !important; /* Màu xanh lá cây nhạt */
+    color: #155724;
+}
+
+.incorrect {
+    background-color: #f8d7da !important; /* Màu đỏ nhạt */
+    color: #721c24;
+}
+/* Thêm vào cuối file style.css */
+.theme-selector {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 20px 0;
+}
+
+#theme-input {
+    width: 350px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#generate-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#generate-button:hover {
+    background-color: #0056b3;
+}
+
+/* Thêm vào cuối file style.css */
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Khoảng cách giữa 2 nút */
+    margin-top: 30px;
+}
+
+#hint-button {
+    padding: 10px 20px;
+    font-size: 1em;
+    background-color: #ffc107; /* Màu vàng */
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#hint-button:hover {
+    background-color: #e0a800;
+}
