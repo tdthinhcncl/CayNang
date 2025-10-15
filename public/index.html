@@ -9,11 +9,13 @@
 <body>
     <div class="container">
         <h1>Ô Chữ Trí Tuệ - Tạo bởi AI</h1>
-	<div class="theme-selector">
-    	    <input type="text" id="theme-input" placeholder="Nhập chủ đề bạn muốn chơi (ví dụ: Lịch sử Việt Nam)">
-    	    <button id="generate-button">Tạo Ô Chữ Mới</button>
-	</div>
-        <h2 id="theme">Chủ đề: Đang tải...</h2>
+        
+        <div class="theme-selector">
+            <input type="text" id="theme-input" placeholder="Nhập chủ đề bạn muốn chơi (ví dụ: Động vật hoang dã)">
+            <button id="generate-button">Tạo Ô Chữ</button>
+        </div>
+
+        <h2 id="theme">Chủ đề: Nhập chủ đề và nhấn nút để bắt đầu!</h2>
         
         <div class="puzzle-container">
             <div id="crossword-grid" class="crossword-grid">
@@ -32,10 +34,10 @@
             </div>
         </div>
 
-	<div class="button-container">
-    	    <button id="check-button">Kiểm Tra Đáp Án</button>
-    	    <button id="hint-button">💡 Gợi Ý</button>
-	</div>
+        <div class="button-container">
+            <button id="check-button">Kiểm Tra Đáp Án</button>
+            <button id="hint-button">💡 Gợi Ý</button>
+        </div>
     </div>
 
     <script src="script.js"></script>

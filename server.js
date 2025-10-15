@@ -1,16 +1,17 @@
-// File: server.js
-// Vui lòng thay thế toàn bộ nội dung file cũ bằng code này.
+// File: server.js - PHIÊN BẢN HOÀN CHỈNH CUỐI CÙNG
 
-// --- 1. Import các thư viện cần thiết ---
 import express from 'express';
-import { GoogleGenerativeAI} from '@google/generative-ai';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 import dotenv from 'dotenv';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-// --- 2. Cấu hình môi trường ---
+// --- Cấu hình môi trường ---
 dotenv.config();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// --- 3. Định nghĩa "Hợp đồng JSON" (Schema) ---
-// Thay thế toàn bộ khối puzzleSchema cũ bằng khối này
+// --- Định nghĩa "Hợp đồng JSON" (Schema) ---
 const puzzleSchema = {
   type: "OBJECT",
   properties: {
@@ -43,35 +44,29 @@ const puzzleSchema = {
   required: ['theme', 'vertical_keyword', 'horizontal_clues'],
 };
 
-// --- 4. Khởi tạo ứng dụng Express và mô hình Gemini ---
+// --- Khởi tạo ứng dụng và mô hình AI ---
 const app = express();
 const port = process.env.PORT || 3000;
 
-app.use(express.static('public')); // <--- THÊM DÒNG NÀY VÀO ĐÂY
-
-// Khởi tạo Gemini một cách an toàn với API Key từ biến môi trường
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
-// Cấu hình mô hình để sử dụng chế độ JSON và schema đã định nghĩa
 const model = genAI.getGenerativeModel({
-  model: "gemini-2.5-pro",
+  model: "gemini-pro", // Sử dụng model ổn định
   generationConfig: {
     responseMimeType: "application/json",
   },
-  responseSchema: puzzleSchema,
+  responseSchema: puzzleSchema, // Đặt schema ở cấp ngoài cùng
 });
 
-// --- 5. Xây dựng API Endpoint ---
-// Trong file server.js, cập nhật lại hàm app.get
+// --- Phục vụ các tệp Frontend ---
+app.use(express.static(path.join(__dirname, 'public')));
 
+// --- Xây dựng API Endpoint ---
 app.get('/api/generate-puzzle', async (req, res) => {
   try {
-    // Lấy chủ đề từ request của người dùng, nếu không có thì dùng chủ đề mặc định
     const userTheme = req.query.theme || 'Khoa học vũ trụ';
-    
     console.log(`Đang tạo ô chữ mới với chủ đề: "${userTheme}"...`);
 
-    // Cập nhật lại prompt để sử dụng chủ đề của người dùng
     const prompt = `
       Hãy tạo một trò chơi ô chữ theo phong cách "Đường lên đỉnh Olympia" với các quy tắc sau:
       1. Chủ đề: ${userTheme}.
@@ -86,16 +81,15 @@ app.get('/api/generate-puzzle', async (req, res) => {
     const puzzleJson = response.text();
 
     console.log("Đã tạo ô chữ thành công!");
-    
     res.json(JSON.parse(puzzleJson));
 
   } catch (error) {
     console.error("Lỗi khi tạo ô chữ:", error);
-    res.status(500).send('Lỗi khi tạo ô chữ');
+    res.status(500).send('Lỗi máy chủ khi tạo ô chữ');
   }
 });
 
-// --- 6. Khởi chạy máy chủ ---
+// --- Khởi chạy máy chủ ---
 app.listen(port, () => {
   console.log(`Máy chủ đang lắng nghe tại http://localhost:${port}`);
 });

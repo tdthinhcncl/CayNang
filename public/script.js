@@ -1,10 +1,8 @@
-// File: public/script.js - PHIÊN BẢN HOÀN THIỆN CUỐI CÙNG
+// File: public/script.js - PHIÊN BẢN HOÀN CHỈNH CUỐI CÙNG
 
-// Biến toàn cục để lưu ô chữ đang được chọn
 let activeCell = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Gán chức năng cho các nút bấm
     const generateButton = document.getElementById('generate-button');
     const checkButton = document.getElementById('check-button');
     const hintButton = document.getElementById('hint-button');
@@ -20,12 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     
     checkButton.addEventListener('click', checkAnswers);
-    hintButton.addEventListener('click', giveHint); // Gán chức năng cho nút Gợi ý
+    hintButton.addEventListener('click', giveHint);
 });
 
 async function fetchPuzzle(theme) {
     document.getElementById('theme').innerText = 'Chủ đề: Đang tạo ô chữ, vui lòng chờ...';
-    document.getElementById('crossword-grid').innerHTML = '';
+    document.getElementById('crossword-grid').innerHTML = '<div class="loader"></div>'; // Hiển thị loader
 
     try {
         const response = await fetch(`/api/generate-puzzle?theme=${encodeURIComponent(theme)}`);
@@ -87,11 +85,7 @@ function renderPuzzle(data) {
                 cell.dataset.char = cellData.char.toUpperCase(); 
                 cell.id = `cell-${r}-${c}`;
                 
-                // *** THÊM MỚI: Theo dõi ô đang được chọn ***
-                cell.addEventListener('focus', () => {
-                    activeCell = cell;
-                });
-
+                cell.addEventListener('focus', () => { activeCell = cell; });
             } else {
                 cell.className = 'empty-cell';
                 cell.disabled = true;
@@ -113,7 +107,9 @@ function renderPuzzle(data) {
 }
 
 function checkAnswers() {
-    const cells = document.querySelectorAll('.grid-cell');
+    const cells = document.querySelectorAll('.grid-cell:not(:disabled)');
+    if (cells.length === 0) return;
+    
     let allCorrect = true;
     cells.forEach(cell => {
         cell.classList.remove('correct', 'incorrect');
@@ -129,23 +125,24 @@ function checkAnswers() {
             allCorrect = false;
         }
     });
-    if (allCorrect) {
+
+    const remainingCells = document.querySelectorAll('.grid-cell:not(:disabled)');
+    if (remainingCells.length === 0) {
         setTimeout(() => {
             alert('🎉 CHÚC MỪNG! 🎉\n\nBạn đã giải thành công toàn bộ ô chữ!');
         }, 300);
     }
 }
 
-// *** THÊM MỚI: Hàm logic cho nút Gợi ý ***
 function giveHint() {
     if (!activeCell || activeCell.disabled) {
         alert('Vui lòng chọn một ô chữ còn trống mà bạn muốn gợi ý!');
         return;
     }
-
     const correctAnswer = activeCell.dataset.char;
     activeCell.value = correctAnswer;
-    activeCell.classList.add('correct'); // Đánh dấu là đúng
-    activeCell.disabled = true; // Khóa ô lại
-    activeCell = null; // Reset ô đang chọn
+    activeCell.classList.add('correct');
+    activeCell.disabled = true;
+    activeCell = null;
+    checkAnswers(); // Tự động kiểm tra lại sau khi gợi ý
 }
